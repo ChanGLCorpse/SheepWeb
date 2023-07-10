@@ -2,8 +2,10 @@ from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////../my_database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/root/sqliteServer/sheep.db'
+
 db = SQLAlchemy(app)
 
 class Data(db.Model):
