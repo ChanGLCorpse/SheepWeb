@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Temperature and Humidity Data</title>
+</head>
+<body>
+    <form method="POST">
+        <input type="date" name="date">
+        <input type="submit" value="Select Date">
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ item.timestamp }}</td>
+                <td>{{ item.temperature }}</td>
+                <td>{{ item.humidity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
