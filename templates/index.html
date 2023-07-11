@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Temperature and Humidity Data</title>
+</head>
+<body>
+    <form action="/" method="get">
+        <label for="date">Date:</label><br>
+        <input type="date" id="date" name="date" value="{{ date }}"><br>
+        <input type="submit" value="Search">
+    </form>
+    <hr>
+    <a href="/upload">Upload data</a>
+    <hr>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Timestamp</th>
+            <th>Temperature</th>
+            <th>Humidity</th>
+        </tr>
+        {% for data in data_list %}
+        <tr>
+            <td>{{ data.id }}</td>
+            <td>{{ data.timestamp }}</td>
+            <td>{{ data.temperature }}</td>
+            <td>{{ data.humidity }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
