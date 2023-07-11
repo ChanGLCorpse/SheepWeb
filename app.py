@@ -1,47 +1,32 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, timedelta
-
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////sqliteServer/sheep.db'
-
 db = SQLAlchemy(app)
 
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    timestamp = db.Column(db.Text)
-    temperature = db.Column(db.Float)
-    humidity = db.Column(db.Float)
+    timestamp = db.Column(db.String(50), nullable=False)
+    temperature = db.Column(db.Float, nullable=False)
+    humidity = db.Column(db.Float, nullable=False)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
-    if request.method == 'POST':
-        date = request.form['date']
-        data = Data.query.filter(Data.timestamp.contains(date)).all()
-    else:
-        yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
-        data = Data.query.filter(Data.timestamp.contains(yesterday)).all()
-
-    return render_template('index.html', data=data)
+    date_query = request.args.get('date', default=datetime.now().date(), type=str)
+    data_list = Data.query.filter(Data.timestamp.like(f'%{date_query}%')).all()
+    return render_template('index.html', date=date_query, data_list=data_list)
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    try:
-        data = request.get_json()
+    timestamp = request.form.get('timestamp')
+    temperature = float(request.form.get('temperature'))
+    humidity = float(request.form.get('humidity'))
+    data = Data(timestamp=timestamp, temperature=temperature, humidity=humidity)
+    db.session.add(data)
+    db.session.commit()
+    return 'Data added successfully'
 
-        new_data = Data(
-            timestamp=data['timestamp'],
-            temperature=data['temperature'],
-            humidity=data['humidity']
-        )
-
-        db.session.add(new_data)
-        db.session.commit()
-
-        return jsonify({'message': 'Data uploaded successfully'}), 200
-    except:
-        return jsonify({'message': 'An error occurred during the upload'}), 400
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
