@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Temperature and Humidity Data</title>
+    <title>温湿度数据查看</title>
 </head>
 <body>
     <form action="/" method="get">
-        <label for="date">Date:</label><br>
+        <label for="date">日期:</label><br>
         <input type="date" id="date" name="date" value="{{ date }}"><br>
-        <input type="submit" value="Search">
+        <input type="submit" value="查询">
     </form>
     <table>
         <tr>
             <th>ID</th>
-            <th>Timestamp</th>
-            <th>Temperature</th>
-            <th>Humidity</th>
+            <th>时间</th>
+            <th>温度</th>
+            <th>湿度</th>
         </tr>
         {% for data in data_list %}
         <tr>
