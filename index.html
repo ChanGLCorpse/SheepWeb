@@ -4,28 +4,27 @@
     <title>Temperature and Humidity Data</title>
 </head>
 <body>
-    <form method="POST">
-        <input type="date" name="date">
-        <input type="submit" value="Select Date">
+    <form action="/" method="get">
+        <label for="date">Date:</label><br>
+        <input type="date" id="date" name="date" value="{{ date }}"><br>
+        <input type="submit" value="Search">
     </form>
-
+    <hr>
     <table>
-        <thead>
-            <tr>
-                <th>Timestamp</th>
-                <th>Temperature</th>
-                <th>Humidity</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in data %}
-            <tr>
-                <td>{{ item.timestamp }}</td>
-                <td>{{ item.temperature }}</td>
-                <td>{{ item.humidity }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
+        <tr>
+            <th>ID</th>
+            <th>Timestamp</th>
+            <th>Temperature</th>
+            <th>Humidity</th>
+        </tr>
+        {% for data in data_list %}
+        <tr>
+            <td>{{ data.id }}</td>
+            <td>{{ data.timestamp }}</td>
+            <td>{{ data.temperature }}</td>
+            <td>{{ data.humidity }}</td>
+        </tr>
+        {% endfor %}
     </table>
 </body>
 </html>
