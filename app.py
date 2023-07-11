@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/root/sqliteServer/sheep.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////sqliteServer/sheep.db'
 
 db = SQLAlchemy(app)
 
